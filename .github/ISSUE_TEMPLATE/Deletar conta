@@ -1,0 +1,7 @@
+As a user  
+I need to delete a customer account  
+So that I can remove obsolete data  
+
+Given an account exists  
+When I delete it  
+Then it is removed from the system
