@@ -1,0 +1,7 @@
+As a developer  
+I need to containerize the service  
+So that it runs consistently  
+
+Given the app  
+When I build Docker image  
+Then it runs in container
