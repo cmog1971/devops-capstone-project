@@ -1,7 +1,0 @@
-As a user  
-I need to update a customer account  
-So that I can keep information current  
-
-Given an existing account  
-When I update details  
-Then the account is updated successfully
