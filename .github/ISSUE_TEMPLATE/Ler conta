@@ -1,0 +1,7 @@
+As a user  
+I need to read a customer account  
+So that I can view customer details  
+
+Given a valid account ID  
+When I request the account  
+Then the account details are returned
