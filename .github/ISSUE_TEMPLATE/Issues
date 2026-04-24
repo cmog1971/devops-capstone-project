@@ -1,9 +1,0 @@
-### 1. Setup ambiente
-```md
-As a developer  
-I need to set up the development environment  
-So that I can start building the service  
-
-Given the project repository  
-When I install dependencies  
-Then the service should run locally
