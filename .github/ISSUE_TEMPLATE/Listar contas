@@ -1,7 +1,0 @@
-As a user  
-I need to list all accounts  
-So that I can see all customers  
-
-Given multiple accounts exist  
-When I request list  
-Then all accounts are returned
