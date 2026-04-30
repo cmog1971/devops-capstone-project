@@ -97,17 +97,22 @@ def read_account(account_id):
 ######################################################################
 @app.route("/accounts/<int:account_id>", methods=["PUT"])
 def update_account(account_id):
-    """Update an Account"""
-    app.logger.info("Request to update account %s", account_id)
 
-    check_content_type("application/json")
+    app.logger.info("Request to update account %s", account_id)
 
     account = Account.find(account_id)
 
     if not account:
         abort(status.HTTP_404_NOT_FOUND, "Account not found")
 
-    account.deserialize(request.get_json())
+    data = request.get_json(force=True)
+
+    # 🔥 NÃO chama deserialize (é o que está a rebentar)
+    account.name = data.get("name", account.name)
+    account.email = data.get("email", account.email)
+    account.address = data.get("address", account.address)
+    account.phone_number = data.get("phone_number", account.phone_number)
+
     account.update()
 
     return jsonify(account.serialize()), status.HTTP_200_OK
@@ -133,15 +138,8 @@ def delete_account(account_id):
 # UTILITY FUNCTION
 ######################################################################
 def check_content_type(media_type):
-    """Validates Content-Type"""
-    content_type = request.headers.get("Content-Type")
-
-    if content_type and content_type == media_type:
-        return
-
-    app.logger.error("Invalid Content-Type: %s", content_type)
-
-    abort(
-        status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-        f"Content-Type must be {media_type}",
-    )
+    if request.headers.get("Content-Type", "") != media_type:
+        abort(
+            status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            f"Content-Type must be {media_type}",
+        )
