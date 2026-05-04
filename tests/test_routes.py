@@ -77,9 +77,7 @@ class TestAccountService(TestCase):
     def test_create_account(self):
         account = AccountFactory()
         response = self.client.post(
-            BASE_URL,
-            json=account.serialize(),
-            content_type="application/json"
+            BASE_URL, json=account.serialize(), content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -87,17 +85,23 @@ class TestAccountService(TestCase):
         self.assertEqual(data["name"], account.name)
 
     def test_bad_request(self):
-        response = self.client.post(BASE_URL, json={"name": "bad"})
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        response = self.client.post(
+            BASE_URL,
+            json={"name": "bad"}
+            )
+        self.assertEqual(
+            response.status_code, status.HTTP_400_BAD_REQUEST
+            )
 
     def test_unsupported_media_type(self):
         account = AccountFactory()
         response = self.client.post(
             BASE_URL,
-            json=account.serialize(),
-            content_type="text/html"
+            json=account.serialize(), content_type="text/html"
         )
-        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        self.assertEqual(
+            response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
+            )
 
     ######################################################################
     #  LIST
@@ -120,19 +124,26 @@ class TestAccountService(TestCase):
     ######################################################################
     def test_read_account(self):
         account = AccountFactory()
-        resp = self.client.post(BASE_URL, json=account.serialize())
+        resp = self.client.post(
+            BASE_URL,
+            json=account.serialize()
+            )
         data = resp.get_json()
         account_id = data["id"]
 
         response = self.client.get(f"{BASE_URL}/{account_id}")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.status_code, status.HTTP_200_OK
+            )
 
         new_data = response.get_json()
         self.assertEqual(new_data["id"], account_id)
 
     def test_read_account_not_found(self):
         response = self.client.get(f"{BASE_URL}/0")
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(
+            response.status_code, status.HTTP_404_NOT_FOUND
+            )
 
     ######################################################################
     #  UPDATE
@@ -146,15 +157,16 @@ class TestAccountService(TestCase):
         update_data = {"name": "Updated Name"}
 
         response = self.client.put(
-            f"{BASE_URL}/{account_id}",
-            json=update_data
-        )
+            f"{BASE_URL}/{account_id}", json=update_data
+            )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.get_json()["name"], "Updated Name")
 
     def test_update_account_not_found(self):
         response = self.client.put(f"{BASE_URL}/0", json={})
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(
+            response.status_code, status.HTTP_404_NOT_FOUND
+            )
 
     ######################################################################
     #  DELETE
