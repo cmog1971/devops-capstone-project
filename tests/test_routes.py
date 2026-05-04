@@ -52,7 +52,10 @@ class TestAccountService(TestCase):
         accounts = []
         for _ in range(count):
             account = AccountFactory()
-            response = self.client.post(BASE_URL, json=account.serialize())
+            response = self.client.post(
+                BASE_URL, 
+                json=account.serialize()
+                )
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
             new_account = response.get_json()
             account.id = new_account["id"]
@@ -97,7 +100,9 @@ class TestAccountService(TestCase):
             json=account.serialize(),
             content_type="text/html"
         )
-        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        self.assertEqual(
+            response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
+            )
 
     ######################################################################
     #  LIST
@@ -171,4 +176,3 @@ class TestAccountService(TestCase):
     def test_delete_account_not_found(self):
         response = self.client.delete(f"{BASE_URL}/0")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
