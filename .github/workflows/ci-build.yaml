@@ -51,7 +51,7 @@ jobs:
 
       - name: Lint with flake8
         run: |
-        flake8 . --config=setup.cfg --count --max-complexity=10 --max-line-length=127 --statistics
+          flake8 . --config=setup.cfg --count --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run unit tests
         run: |
