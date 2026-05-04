@@ -1,3 +1,4 @@
+# flake8: noqa: W391
 """
 Account API Service Test Suite
 
