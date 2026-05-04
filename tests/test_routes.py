@@ -53,7 +53,7 @@ class TestAccountService(TestCase):
         for _ in range(count):
             account = AccountFactory()
             response = self.client.post(
-                BASE_URL, 
+                BASE_URL,
                 json=account.serialize()
                 )
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
